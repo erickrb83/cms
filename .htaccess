@@ -1,0 +1,16 @@
+# Prevent seeing Index of folders and files
+Options -Indexes 
+
+# Makes a pretty URL
+RewriteEngine On
+
+# Rewrite conditions
+# Request not a directory
+RewriteCond %{REQUEST_FILENAME} !-d
+# Request not a file
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Rewrite Rule
+# Regex rule - . -> Match any character, + -> Match all times, $ -> asserts position to end of line. 
+# [L] - If rule matches, no other rules will be processed.  
+RewriteRule ^(.+)$ index.php/$1 [L]
