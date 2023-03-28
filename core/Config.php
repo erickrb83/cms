@@ -1,5 +1,7 @@
 <?php
 
+//Namespaces 1. Prevent name collisions
+// 2. Create Alias with shorter names for readability.
 namespace Core;
 
 class Config {
