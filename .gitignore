@@ -1,0 +1,8 @@
+.DS_Store_Store
+.vscode/
+authentication.js
+node_modules/
+notes/
+**/*-todo.md
+
+# git config --global core.excludesfile ""
