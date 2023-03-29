@@ -11,6 +11,6 @@ class BlogController extends Controller{
     }
 
     public function fooAction(){
-        die("made to to foo action");
+        die("made it to foo action");
     }
 }

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 use \Core\{Config, Router};
 //or use \Core\Config;
 // user \Core\Route;
@@ -10,7 +11,7 @@ define('PROOT', __DIR__);
 // Makes it compatibility with whichever OS is used. 
 define('DS', DIRECTORY_SEPARATOR);
 
-// PHP library function
+// PHP library function Standard Php Library
 spl_autoload_register(function($className){
     $parts = explode('\\', $className);
     $class = end($parts);

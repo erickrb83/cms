@@ -29,7 +29,15 @@ class Router {
         $action .= "Action";
         array_shift($urlParts);
         
+        if(!class_exists($controller)){
+            throw new \Exception("Controller class \"{$controller}\" not found");
+        }
         $controllerClass = new $controller($controllerName, $actionName);
+        
+
+        if(!method_exists($controllerClass, $action)){
+            throw new \Exception("The method \"{$action}\" does not exist on the \"{$controller}\" controller");
+        }
         call_user_func_array([$controllerClass, $action], $urlParts);
     }
 }
