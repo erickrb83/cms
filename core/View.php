@@ -63,4 +63,11 @@ class View {
             echo 'content is empty';
         }
     }
+
+    public function partial($path){
+        $fullPath = PROOT . DS . 'app' . DS . 'views' . DS . $path . '.php';
+        if(file_exists($fullPath)){
+            include $fullPath;
+        }
+    }
 }

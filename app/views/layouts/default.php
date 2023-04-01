@@ -14,6 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js" integrity="sha384-heAjqF+bCxXpCWLa6Zhcp4fu20XoNIA98ecBC1YkdXhszjoejr5y9Q77hIrv8R9i" crossorigin="anonymous"></script>
 </head>
 <body>
+    <?php $this->partial('partials/mainMenu');?>
     <div class="container-fluid p-4">
         <?php $this->content('content')?>
     </div>
