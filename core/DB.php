@@ -7,6 +7,7 @@ use Core\{Config, H};
 
 class DB{
     protected $_dbh, $_results, $_lastInsertID, $_rowCount = 0, $_fetchType = PDO::FETCH_OBJ, $_class, $_error = false;
+    protected $_stmt;
     protected static $_db;
 
     // Will setup a Singleton Pattern use a static method to determine if it's substantiated. 
@@ -33,6 +34,40 @@ class DB{
             self::$_db = new self();
         }
         return self::$_db;
+    }
+
+    public function execute($sql, $bind=[]){
+        $this->_results = null;
+        $this->_lastInsertID = null;
+        $this->_error = false;
+        $this->_stmt = $this->_dbh->prepare($sql);
+        if(!$this->_stmt->execute($bind)){
+            $this->_error = true;
+        }else {
+            $this->_lastInsertID = $this->_dbh->lastInsertId();
+        }
+        return $this;
+    }
+
+    public function query($sql, $bind=[]){
+        $this->execute($sql, $bind);
+        if(!$this->_error){
+            $this->_rowCount = $this->_stmt->rowCount();
+            $this->_results = $this->_stmt->fetchAll($this->_fetchType);
+        }
+        return $this;
+    }
+
+    public function results(){
+        return $this->_results;
+    }
+
+    public function count(){
+        return $this->_rowCount;
+    }
+
+    public function lastInsertID(){
+        return $this->_lastInsertID;
     }
 }
 
