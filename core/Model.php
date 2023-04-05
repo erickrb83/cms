@@ -1,7 +1,7 @@
 <?php 
 namespace Core;
 use \PDO;
-use Core\DB;
+use Core\{DB, Request};
 
 class Model{
     protected static $table = "";
@@ -191,9 +191,9 @@ class Model{
     public function timeStamps(){
         $dt = new \DateTime('now', new \DateTimeZone('UTC'));
         $now = $dt->format('Y-m-d H:i:s');
-        $this->updated_at = $now;
+        $this->updated_at = $now; //Now these two????
         if($this->isNew()){
-            $this->created_at = $now;
+            $this->created_at = $now; //This one too??
         }
     }
 
