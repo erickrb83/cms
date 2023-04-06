@@ -14,6 +14,23 @@ class FH{
         return $html;
     }
 
+    public static function selectBlock($label, $id, $value, $options, $inputAttributes = [], $wrapperAttributes = [], $errors = []){
+        $input = self::appendErrors($id, $inputAttributes, $errors);
+        $inputAttributes = self::processAttributes($inputAttributes);
+        $wrapperStr = self::processAttributes($wrapperAttributes);
+        $errorMsg = array_key_exists($id, $errors) ? $errors[$id] : "";
+        $html = "<div {$wrapperStr}>";
+        $html .= "<label for= '{$id}'>{$label}</label>";
+        $html .= "<select id='{$id}' name='{$id}' {$inputAttributes}>";
+        foreach($options as $val => $display){
+            $selected = $val == $value ? ' selected ' : '';
+            $html .= "<option value='{$val}'>{$display}</option>";
+        }
+        $html .= "</select>";
+        $html .= "<div class='invalid-feedback'>{$errorMsg}</div></div>";
+        return $html;
+    }
+
     public static function appendErrors($key, $inputAttributes, $errors){
         if(array_key_exists($key, $errors)){
             if(array_key_exists('class', $inputAttributes)){
