@@ -11,6 +11,8 @@ class AuthController extends Controller {
         } else {
             $user = Users::findById($id);
         }
+        $user->password = '';
+        $user->confirm = '';
 
         // if posted
         if($this->request->isPost()){
