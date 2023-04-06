@@ -81,7 +81,7 @@ class Model{
             if($this->isNew()){
                 $save = $db->insert(static::$table, $values);
                 if($save){
-                    $this->id = $db->getLastInsertId(); //$id again????
+                    $this->id = $db->lastInsertId(); //$id again????
                 }
             }else{
                 $save = $db->update(static::$table, $values, ['id' => $this->id]); //$id again????

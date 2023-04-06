@@ -14,7 +14,13 @@ class AuthController extends Controller {
 
         // if posted
         if($this->request->isPost()){
-            H::dnd($this->request->get());
+            // Checks to see if there's a cross site request forgery attack. 
+            Session::csrfCheck();
+            $fields = ['fname', 'lname', 'email', 'acl', 'password', 'confirm'];
+            foreach($fields as $field){
+                $user->{$field} = $this->request->get($field);
+            }
+            $user->save();
         }
 
         $this->view->user = $user;

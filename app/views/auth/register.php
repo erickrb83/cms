@@ -6,6 +6,7 @@
     <div class="col-md-8 offset-md-2 poster">
         <h2>Register</h2>
         <form action="" method="POST">
+            <?= FH::csrfField();?>
             <div class="row">
                 <?= FH::inputBlock('First Name', 'fname', $this->user->fname, ['class' => 'form-control'], ['class' => 'form-group col-md-6'], $this->errors);?>
                 <?= FH::inputBlock('Last Name', 'lname', $this->user->lname, ['class' => 'form-control'], ['class' => 'form-group col-md-6'], $this->errors);?>
