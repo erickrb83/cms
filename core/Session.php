@@ -36,4 +36,26 @@ class Session {
         }
         Router::redirect('auth/badToken');
     }
+
+    // $type can be primary, secondary, success, danger, warning, info, light, and dark
+    public static function msg($msg, $type ='danger'){
+        $alerts = self::get('session_alerts') ? self::get('session_alerts') : [];
+        $alerts[$type][] = $msg;
+        self::set('session_alerts', $alerts);
+    }
+
+    public static function displaySessionAlert(){
+        $alerts = self::exists('session_alerts') ? self::get('session_alerts') : [];
+        $html ='';
+        foreach($alerts as $type => $msgs){
+            foreach($msgs as $msg){
+                $html .= "<div class='alert alert-warning alert-dismissible alert-{$type}'>
+                {$msg}<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times</span></button>
+                </div>";
+            }
+        }
+        self::delete('session_alerts');
+        return $html;
+    }
 }

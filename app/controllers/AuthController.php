@@ -11,8 +11,10 @@ class AuthController extends Controller {
         } else {
             $user = Users::findById($id);
         }
-        $user->password = '';
-        $user->confirm = '';
+        if(!$user){
+            Session::msg('You do not have permission to edit this user');
+            Router::redirect('blog/index');
+        }
 
         // if posted
         if($this->request->isPost()){
@@ -22,9 +24,16 @@ class AuthController extends Controller {
             foreach($fields as $field){
                 $user->{$field} = $this->request->get($field);
             }
-            $user->save();
+            if($id != 'new' && !empty($user->password)){
+                $user->resetPassword = true;
+            }
+            if($user->save()){
+                $msg = ($id == 'new') ? 'user created' : 'user updated';
+                Session::msg($msg, 'Success');
+                Router::redirect('blog/index');
+            }
         }
-
+        $this->view->header = $id == 'new' ? 'Add User' : 'Edit User';
         $this->view->user = $user;
         $this->view->role_options = ['' => '', Users::AUTHOR_PERMISSION => 'Author', Users::ADMIN_PERMISSION => 'Admin'];
         $this->view->errors = $user->getErrors();

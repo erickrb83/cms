@@ -22,7 +22,7 @@ class Users extends Model{
         // $this->runValidation(new NumericValidator($this, ['field' => 'fname', 'msg' => "Field must be numeric"]));
         $this->runValidation(new UniqueValidator($this, ['field' => ['email', 'lname'], 'msg' => "A user with this email already exists"]));
  
-        if($this->isNew()){
+        if($this->isNew() || $this->resetPassword){
             $this->runValidation(new RequiredValidator($this, ['field' => 'password', 'msg' => "password is a required field"]));
             $this->runValidation(new RequiredValidator($this, ['field' => 'confirm', 'msg' => "Confirm password is a required field"]));
             $this->runValidation(new MatchesValidator($this, ['field' => 'confirm', 'rule' =>$this->password, 'msg' => "Passwords do not match"]));
@@ -30,6 +30,8 @@ class Users extends Model{
             // $this->runValidation(new MaxValidator($this, ['field' => 'password', 'rule' =>10, 'msg' => "Password must be shorter than 10 characters"]));
 
             $this->password = password_hash($this->password, PASSWORD_DEFAULT);
+        }else {
+            $this->_skipUpdate = ['password'];
         }
     }
 }

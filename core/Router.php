@@ -40,4 +40,21 @@ class Router {
         }
         call_user_func_array([$controllerClass, $action], $urlParts);
     }
+
+    public static function redirect($location){
+        if(!headers_sent()){
+            // PHP way
+            header('Location: ' . ROOT . $location);
+        } else {
+            //JavaScript way
+            echo '<script>; type="text/javascript">';
+            echo 'window.location.href = "' . ROOT . $location . ' " ';
+            echo '</script>';
+            //If Javascript is disabled. 
+            echo '<noscript>';
+            echo '<meta http-equiv="refresh" content="0;url=' . ROOT . $location . ' " ';
+            echo '</noscript>';
+        }
+        exit();
+    }
 }
