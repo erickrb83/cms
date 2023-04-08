@@ -1,11 +1,11 @@
 <?php
 namespace App\Models;
 
-use Core\Model;
+use Core\{Model, Session, Cookie};
 use Core\Validators\{RequiredValidator, EmailValidator, MatchesValidator, MinValidator, MaxValidator, NumericValidator, UniqueValidator};
 
 class Users extends Model{
-    protected static $table = 'users';
+    protected static $table = 'users', $_current_user = false;
     public $id, $created_at, $updated_at, $fname, $lname, $email, $password, $acl, $blocked = 0, $confirm, $remember = '';
 
     const AUTHOR_PERMISSION = 'author';
@@ -33,5 +33,15 @@ class Users extends Model{
         }else {
             $this->_skipUpdate = ['password'];
         }
+    }
+
+    public function validateLogin(){
+        $this->runValidation(new RequiredValidator($this, ['field' => 'email', 'msg' => "email is a required field"]));
+        $this->runValidation(new RequiredValidator($this, ['field' => 'password', 'msg' => "password is a required field"]));    
+    }
+
+    public function login($remember = false){
+        Session::get('logged_in_user', $this->id); 
+        self::$_current_user = $this->id; 
     }
 }

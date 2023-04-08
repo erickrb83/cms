@@ -31,6 +31,17 @@ class FH{
         return $html;
     }
 
+    public static function check($label, $id, $checked = '', $inputAttributes = [], $wrapperAttributes = [], $errors = []){
+        $inputAttributes = self::appendErrors($id, $inputAttributes, $errors);
+        $wrapperStr = self::processAttributes($wrapperAttributes);
+        $inputStr = self::processAttributes($inputAttributes);
+        $checkedStr = $checked == 'on' ? "checked" : "";
+        $html = "<div {$wrapperStr}>";
+        $html .= "<input type=\"checkbox\" id=\"{$id}\" name=\"{$id}\" {$inputStr} {$checkedStr}>";
+        $html .= "<label class=\"form-check-label\" for=\"{$id}\"></label>{$label}</div>";
+        return $html;
+    }
+
     public static function appendErrors($key, $inputAttributes, $errors){
         if(array_key_exists($key, $errors)){
             if(array_key_exists('class', $inputAttributes)){

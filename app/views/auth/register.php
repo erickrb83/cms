@@ -5,7 +5,7 @@
 <div class="row">
     <div class="col-md-8 offset-md-2 poster">
         <h2><?= $this->header;?></h2>
-        <form action="" method="POST">
+        <form method="POST">
             <?= FH::csrfField();?>
             <div class="row">
                 <?= FH::inputBlock('First Name', 'fname', $this->user->fname, ['class' => 'form-control'], ['class' => 'form-group col-md-6'], $this->errors);?>
