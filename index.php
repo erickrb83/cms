@@ -1,7 +1,8 @@
 <?php
 session_start();
 
-use \Core\{Config, Router};
+use \Core\{Config, Router, H};
+use \App\Models\Users;
 //or use \Core\Config;
 // user \Core\Route;
 
@@ -22,6 +23,9 @@ spl_autoload_register(function($className){
         include($path);
     }
 });
+
+//check for logged in user
+$currentUser = Users::getCurrentUser();
 
 $rootDir = Config::get('root_dir');
 // Defines a constant of Root to call on anywhere in app. Best for Config
