@@ -2,7 +2,7 @@
 session_start();
 
 use \Core\{Config, Router, H};
-use \App\Models\Users;
+use App\Models\Users;
 //or use \Core\Config;
 // user \Core\Route;
 
@@ -26,6 +26,7 @@ spl_autoload_register(function($className){
 
 //check for logged in user
 $currentUser = Users::getCurrentUser();
+//H::dnd($currentUser);
 
 $rootDir = Config::get('root_dir');
 // Defines a constant of Root to call on anywhere in app. Best for Config
@@ -40,4 +41,7 @@ $url = str_replace(ROOT, '', $url);
 // '.+' -> '.' find any character '+' all instance
 // replace instances with empty string, and assigns it to $url
 $url = preg_replace('/(\?.+)/', '', $url);
+
+$currentPage = $url;
+
 Router::route($url);

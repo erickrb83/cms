@@ -77,4 +77,12 @@ class AuthController extends Controller {
         $this->view->user = $user;
         $this->view->render();
     }
+
+    public function logoutAction(){
+        global $currentUser;
+        if ($currentUser){
+            $currentUser->logout();
+        }
+        Router::redirect('auth/login');
+    }
 }

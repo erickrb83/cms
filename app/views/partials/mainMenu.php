@@ -1,3 +1,10 @@
+<?php
+use Core\H;
+
+global $currentUser;
+
+//H::dnd($currentUser->fname);
+?>
 <nav class="navbar navbar-expand-lg bg-body-tertiary nav navbar bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="<?=ROOT?>">My Blog Project</a>
@@ -5,10 +12,8 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="mainMenu">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
+      <ul class="navbar-nav mr-auto my-lg-0 navbar-nav-scroll">
+        <?= H::navItem('blog/index', 'Home')?>
         <!-- Dropdown example -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -28,6 +33,25 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
       -->
+      <ul class="navbar-nav mr-auto my-lg-0 navbar-nav-scroll">
+        <li class="navbar-nav d-flex">
+          <?php if(!$currentUser): ?>
+            <?= H::navItem('auth/login', 'Log In') ?>
+          <?php endif; ?>
+          <?php if($currentUser): ?>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Hello <?= $currentUser->fname?>
+              </a>
+                <ul class="dropdown-menu">
+                  <?= H::navItem('admin/articles', 'Author Portal', true);?>
+                  <li><hr class="dropdown-divider"></li>
+                  <?= H::navItem('auth/logout', 'Logout', true)?>
+                </ul>
+            </li>
+          <?php endif; ?>
+        </li>
+      </ul> 
     </div>
   </div>
 </nav>

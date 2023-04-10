@@ -1,9 +1,10 @@
 <?php
 namespace App\Models;
 
-use Core\{Model, Session, Cookie, Config, H};
+use Core\{Model, Session, Config, H};
+use Core\Cookie;
 use Core\Validators\{RequiredValidator, EmailValidator, MatchesValidator, MinValidator, MaxValidator, NumericValidator, UniqueValidator};
-use App\Models\UserSessions;
+use App\Models\{UserSessions};
 
 class Users extends Model{
     protected static $table = 'users', $_current_user = false;
@@ -43,7 +44,7 @@ class Users extends Model{
 
     public function login($remember = false){
         Session::get('logged_in_user', $this->id); 
-        self::$_current_user = $this->id; 
+        self::$_current_user = $this; 
         if($remember){
             $now = time();
             $newHash = md5("{$this->id}_{$now}");
@@ -60,16 +61,28 @@ class Users extends Model{
 
     public static function loginFromCookie(){
         $cookieName = Config::get('login_cookie_name');
-        if(!Cookie::exists($cookieName)) return false;
-        
+        if(!Cookie::exists($cookieName)){
+            return false;
+        } 
         $hash = Cookie::get($cookieName);
         $session = UserSessions::findByHash($hash);
-        if(!$session) return false;
-
+        if(!$session) {
+            return false;
+        } 
         $user = self::findById($session->user_id);
         if($user){
             $user->login(true);
         }
+    }
+
+    public function logout(){
+        Session::delete('logged_in_user');
+        self::$_current_user = false;
+        $session = UserSessions::findByUserId($this->id);
+        if($session){
+            $session->delete();
+        }
+        Cookie::delete(Config::get('login_cookie_name'));
     }
 
     public static function getCurrentUser(){
@@ -77,7 +90,9 @@ class Users extends Model{
             $user_id = Session::get('logged_in_user');
             self::$_current_user = self::findById($user_id);
         }
-        if(!self::$_current_user) self::loginFromCookie();
+        if(!self::$_current_user) {
+            self::loginFromCookie();
+        }
         return self::$_current_user;
     }
 }
