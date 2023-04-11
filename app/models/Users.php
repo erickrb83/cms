@@ -43,7 +43,7 @@ class Users extends Model{
     }
 
     public function login($remember = false){
-        Session::get('logged_in_user', $this->id); 
+        Session::set('logged_in_user', $this->id); 
         self::$_current_user = $this; 
         if($remember){
             $now = time();

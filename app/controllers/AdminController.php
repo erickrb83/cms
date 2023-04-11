@@ -21,6 +21,7 @@ class AdminController extends Controller{
             Router::redirect('admin/articles');
         }
         $params = ['order' => 'lname, fname'];
+        $params = Users::mergeWithPagination($params);
         $this->view->users = Users::find($params);
         $this->view->total = Users::findTotal($params);
         $this->view->render();

@@ -11,7 +11,8 @@ class Config {
         'default_controller'    => 'Blog',         // Default Home Controller
         'default_layout'        => 'default',      // Default Layout
         'default_site_title'    => 'My Project',   // Default Site Title
-        'db_host'               => '127.0.0.1',    // Default host. USE IP ADDRESS, then no need for a DNS Lookup
+        'db_host'               => 'localhost',    // Default host. USE IP ADDRESS, then no need for a DNS Lookup
+        'db_port'               => '8888',
         'db_name'               => 'cms',          // Database Name
         'db_user'               => 'root',         // Database User
         'db_password'           => 'root',         // Database Password

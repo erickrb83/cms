@@ -17,13 +17,14 @@ class DB{
         $name = Config::get('db_name');
         $user = Config::get('db_user');
         $pass = Config::get('db_password');
+        $port = Config::get('db_port');
         $options = [
             PDO::ATTR_EMULATE_PREPARES => false,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
         ];
         try{
-            $this->_dbh = new PDO("mysql:host={$host};dbname={$name}", $user, $pass, $options);
+            $this->_dbh = new PDO("mysql:host={$host};port={$port};dbname={$name}", $user, $pass, $options);
         } catch(Exception $e){
             throw new Exception($e->getMessage());
         }
