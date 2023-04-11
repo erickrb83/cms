@@ -22,9 +22,13 @@
                     <td><?= $user->displayName() ?></td>
                     <td><?= $user->email?></td>
                     <td><?= ucwords($user->acl) ?></td>
-                    <td> </td>
                     <td> 
-                    <a href="<?=ROOT?>auth/register/<?=$user->id?>" class="btn btn-small btn-info">Edit</a>
+                        <?= $user->blocked ? "Blocked" : "Active" ?>
+                    </td>
+                    <td class="text-right"> 
+                        <a href="<?=ROOT?>auth/register/<?=$user->id?>" class="btn btn-small btn-info">Edit</a>
+                        <a href="<?=ROOT?>admin/toggleBlockUser/<?= $user->id?>" class="btn btn-small <?= $user->blocked ? "btn-warning" : "btn-secondary"?>"><?= $user->blocked ? "Unblock" : "Block"?></a>
+                        <button class="btn btn-small btn-danger" onclick="confirmDelete('<?= $user->id ?>')">Delete</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -32,5 +36,12 @@
     </table>
     <?php $this->partial('partials/pager') ;?>
 </div>
+<script>
+    function confirmDelete(userId){
+        if(window.confirm("Are you sure you want to delete the user?")){
+            window.location.href = `<?= ROOT?>admin\deleteUser\{$userId}`;
+        }
+    }
+</script>
 <?php $this->end(); ?>
 

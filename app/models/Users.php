@@ -93,10 +93,17 @@ class Users extends Model{
         if(!self::$_current_user) {
             self::loginFromCookie();
         }
+        if(self::$_current_user && self::$_current_user->blocked){
+            self::$_current_user->logout();
+            Session::msg("You are currently blocked, please talk to admin");
+        }
         return self::$_current_user;
     }
 
     public function hasPermission($acl){
+        if(is_array($acl)){
+            return in_array($this->acl, $acl);	
+        }
         return $this->acl == $acl;
     }
 

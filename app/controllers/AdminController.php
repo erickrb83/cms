@@ -11,19 +11,42 @@ class AdminController extends Controller{
     }
 
     public function articlesAction(){
+        Router::permRedirect(['author, admin'], 'blog/index');
         $this->view->render();
     }
 
     public function usersAction(){
-        $allowed = $this->currentUser->hasPermission('admin');
-        if(!$allowed){
-            Session::msg("You do not have access to this page");
-            Router::redirect('admin/articles');
-        }
+        Router::permRedirect('admin', 'admin/articles');
         $params = ['order' => 'lname, fname'];
         $params = Users::mergeWithPagination($params);
         $this->view->users = Users::find($params);
         $this->view->total = Users::findTotal($params);
         $this->view->render();
+    }
+
+    public function toggleBlockUserAction($userId){
+        Router::permRedirect('admin', 'admin/articles');
+        $user = Users::findById($userId);
+        if($user){
+            $user->blocked = $user->blocked ? 0 : 1;
+            $user->save();
+            $msg = $user->blocker ? "User Blocked" : "User Unblocked";
+        }
+        Session::msg($msg, 'success');
+        Router::redirect('admin/users');
+    }
+
+    public function deleteUserAction($userId){
+        Router::permRedirect('admin', 'admin/articles');
+        $user = Users::findById($userId);
+        $msgType = 'danger';
+        $msg = 'User can not be deleted';
+        if($user && $user->id !== Users::getCurrentUser()->id){
+            $user->delete();
+            $msgType = 'success';
+            $msg = 'User Deleted';
+        }
+        Session::msg($msg, $msgType);
+        Router::redirect('admin/users');
     }
 }
