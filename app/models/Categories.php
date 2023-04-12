@@ -10,6 +10,5 @@ class Categories extends Model {
     public function beforeSave() {
         $this->runValidation(new RequiredValidator($this, ['field' => 'name', 'msg' => 'Name is a required field']));
         $this->runValidation(new UniqueValidator($this, ['field' => 'name', 'msg' => 'That Category already exists']));
-
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 use Core\{Controller, Session, Router, H};
-use App\Models\{Categories, Users};
+use App\Models\{Categories, Users, Articles};
 
 class AdminController extends Controller{
     
@@ -11,7 +11,45 @@ class AdminController extends Controller{
     }
 
     public function articlesAction(){
-        Router::permRedirect(['author, admin'], 'blog/index');
+        Router::permRedirect(['admin', 'author'], 'blog/index');
+        $this->view->render();
+    }
+
+    public function articleAction($id = 'new'){
+        $params = [
+            'conditions' => "id = :id AND user_id = :user_id",
+            'bind' => ['id' => $id, 'user_id' => $this->currentUser->id]
+        ];
+        $article = $id == 'new' ? new Articles() : Articles::findFirst($params);
+        if(!$article){
+            Session::msg("You do not have permission to edit this article");
+            Router::redirect('admin/articles');
+        }
+
+        $categories = Categories::find(['order' => 'name']);
+        $catOptions = [0 => 'Uncategorized'];
+        foreach($categories as $category){
+            $catOptions[$category->id] = $category->name;
+        }
+
+        if($this->request->isPost()){
+            Session::csrfCheck();
+            $article->user_id = $this->currentUser->id;
+            $article->title = $this->request->get('title');
+            $article->body = $this->request->get('body');
+            $article->status = $this->request->get('status');
+            $article->category_id = $this->request->get('category_id');
+            if($article->save()){
+                Session::msg("{$article->title} saved.", 'success');
+                Router::redirect('admin/articles');
+            }
+        }
+
+        $this->view->article = $article;
+        $this->view->statusOptions = ['private' => 'Private', 'public' => 'Public'];
+        $this->view->categoryOptions = $catOptions;
+        $this->view->errors = $article->getErrors();
+        $this->view->heading = $id === 'new' ? "Add Article" : "Edit";
         $this->view->render();
     }
 

@@ -42,6 +42,18 @@ class FH{
         return $html;
     }
 
+    public static function textarea($label, $id, $value, $inputAttributes = [], $wrapperAttributes = [], $errors = []){
+        $wrapperStr = self::processAttributes($wrapperAttributes);
+        $inputAttributes = self::appendErrors($id, $inputAttributes, $errors);
+        $inputAttributes = self::processAttributes($inputAttributes);
+        $errorMsg = array_key_exists($id, $errors) ? $errors[$id] : "";
+        $html = "<div {$wrapperStr}>";
+        $html .= "<label for='{$id}'>{$label}</label>";
+        $html .= "<textarea id='{$id}' name='{$id}' value='{$value}' {$inputAttributes}>{$value}</textarea>";
+        $html .= "<div class='invalid-feedback'>{$errorMsg}</div></div>";
+        return $html;
+    }
+
     public static function appendErrors($key, $inputAttributes, $errors){
         if(array_key_exists($key, $errors)){
             if(array_key_exists('class', $inputAttributes)){
