@@ -39,7 +39,7 @@
 <script>
     function confirmDelete(userId){
         if(window.confirm("Are you sure you want to delete the user?")){
-            window.location.href = `<?= ROOT?>admin\deleteUser\{$userId}`;
+            window.location.href = `<?=ROOT?>admin/deleteUser/${userId}`;
         }
     }
 </script>
