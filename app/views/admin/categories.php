@@ -5,7 +5,7 @@
 
 </div>
 <div class="poster">
-    <table class="table table-hover table-stripped">
+    <table class="table table-hover table-striped">
         <thead>
             <tr>
                 <th>ID</th>
@@ -20,7 +20,7 @@
                     <td><?= $category->name ?></td>
                     <td class ="text-right">
                         <a href="<?=ROOT ?>admin/category/<?=$category->id?> " class="btn btn-sm btn-info">Edit</a>
-                        <button class="btn btn-small btn-danger" onclick="deleteCategory('<?=$category->id?>')">Delete</button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteCategory('<?=$category->id?>')">Delete</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

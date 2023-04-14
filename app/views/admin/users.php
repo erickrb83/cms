@@ -6,7 +6,7 @@
 </div>
 
 <div class="poster">
-    <table class="table table-hover">
+    <table class="table table-hover table-striped">
         <thead>
             <tr>
                 <th>Name</th>
@@ -26,9 +26,9 @@
                         <?= $user->blocked ? "Blocked" : "Active" ?>
                     </td>
                     <td class="text-right"> 
-                        <a href="<?=ROOT?>auth/register/<?=$user->id?>" class="btn btn-small btn-info">Edit</a>
-                        <a href="<?=ROOT?>admin/toggleBlockUser/<?= $user->id?>" class="btn btn-small <?= $user->blocked ? "btn-warning" : "btn-secondary"?>"><?= $user->blocked ? "Unblock" : "Block"?></a>
-                        <button class="btn btn-small btn-danger" onclick="confirmDelete('<?= $user->id ?>')">Delete</button>
+                        <a href="<?=ROOT?>auth/register/<?=$user->id?>" class="btn btn-sm btn-info">Edit</a>
+                        <a href="<?=ROOT?>admin/toggleBlockUser/<?= $user->id?>" class="btn btn-sm <?= $user->blocked ? "btn-warning" : "btn-secondary"?>"><?= $user->blocked ? "Unblock" : "Block"?></a>
+                        <button class="btn btn-sm btn-danger" onclick="confirmDelete('<?= $user->id ?>')">Delete</button>
                     </td>
                 </tr>
             <?php endforeach; ?>

@@ -22,7 +22,7 @@
                 <td><?= $article->status?></td>
                 <td class="text-right">
                     <a href="<?= ROOT?>admin/article/<?=$article->id?>" class="btn btn-sm btn-info">Edit</a>
-                    <button class="btn, btn-sm btn-danger" onclick="deleteArticle('<?=$article->id?>')">Delete</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteArticle('<?=$article->id?>')">Delete</button>
                 </td>
             </tr>
             <?php endforeach; ?>

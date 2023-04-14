@@ -25,11 +25,11 @@ class Upload {
             $this->errors[$this->field] = "File is Required";
         }
         //check size
-        if($this->size > $this->maxSize){
+        if(!empty($this->tmp) && $this->size > $this->maxSize){
             $this->errors[$this->field] = "File max size is " . $this->formatBytes($this->size);
         }
         //Check file type
-        if(empty($this->errors)){
+        if(!empty($this->tmp) && empty($this->errors)){
             $fileInfo = new \finfo(FILEINFO_MIME_TYPE);
             $type = $fileInfo->file($this->tmp);
             echo($type);
