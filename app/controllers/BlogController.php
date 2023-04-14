@@ -14,7 +14,7 @@ class BlogController extends Controller{
             'bind' => ['status' => 'public'],
             'joins' => [
                 ['users', 'articles.user_id = users.id'],
-                ['categories', 'articles.category_id = categories.id', 'categories', 'LEFT'],
+                ['categories', 'articles.category_id = categories.id', 'categories', 'LEFT']
             ],
             'order' => 'articles.id DESC'
         ];
@@ -79,5 +79,29 @@ class BlogController extends Controller{
         $this->view->heading = "Author: {$author->displayName()}";
         $this->view->setSiteTitle('Newest Articles');
         $this->view->render('blog/index');
+    }
+
+    public function detailsAction($id){
+        $params = [
+            'columns' => 'articles.*, users.fname, users.lname, category.name as category, category.id as category_id',
+            'conditions' => "articles.id = :id AND articles.status = 'public'",
+            'joins' => [
+                ['users', 'users.id = articles.user_id'],
+                ['categories' , 'category.id = articles.category_id' , 'category' , 'LEFT']
+            ],
+            'bind' => ['id' => $id]
+        ];
+        $article = Articles::findFirst($params);
+        if(!$article) Router::redirect('blog/articleNotFound');
+        if(!$article->category_id){
+            $article->category_id = 0;
+            $article->category = "Uncategorized";
+        }
+        $this->view->article = $article;
+        $this->view->render();
+    }
+    
+    public function articleNotFoundAction(){
+        $this->view->render();
     }
 }
