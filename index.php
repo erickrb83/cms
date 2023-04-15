@@ -3,14 +3,19 @@ session_start();
 
 use \Core\{Config, Router, H};
 use App\Models\Users;
-//or use \Core\Config;
-// user \Core\Route;
+use Symfony\Component\Dotenv\Dotenv;
 
 // define constants that are Global
 // Get root where the index.php resides.
 define('PROOT', __DIR__);
 // Makes it compatibility with whichever OS is used. 
 define('DS', DIRECTORY_SEPARATOR);
+
+require_once(PROOT . DS . 'lib/dotenv/Dotenv.php');
+require_once(PROOT . DS . 'lib/dotenv/Exception/ExceptionInterface.php');
+require_once(PROOT . DS . 'lib/dotenv/Exception/FormatException.php');
+require_once(PROOT . DS . 'lib/dotenv/Exception/FormatExceptionContext.php');
+require_once(PROOT . DS . 'lib/dotenv/Exception/PathException.php');
 
 // PHP library function Standard Php Library
 spl_autoload_register(function($className){
@@ -22,11 +27,18 @@ spl_autoload_register(function($className){
     if(file_exists($path)){
         include($path);
     }
+    // elseif(file_exists(PROOT . DS . 'lib' . DS . 'dotenv' . DS . 'Exception' . DS . $class . '.php')){
+    //     include(PROOT . DS . 'lib' . DS . 'dotenv' . DS . 'Exception' . DS . $class . '.php');
+    // }
 });
 
-//check for logged in user
+// Load .env file
+$dotenv = new Dotenv();
+$dotenv->load(PROOT. DS . '.env');
+// H::dnd($_ENV);
+
+// Check for logged in user
 $currentUser = Users::getCurrentUser();
-//H::dnd($currentUser);
 
 $rootDir = Config::get('root_dir');
 // Defines a constant of Root to call on anywhere in app. Best for Config

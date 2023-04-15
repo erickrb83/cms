@@ -78,7 +78,6 @@ class DB{
     }
 
     public function update($table, $values, $conditions){
-        $fields = [];
         $binds = [];
         $valueStr = '';
         foreach($values as $field => $value){

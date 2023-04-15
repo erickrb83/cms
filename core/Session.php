@@ -49,9 +49,9 @@ class Session {
         $html ='';
         foreach($alerts as $type => $msgs){
             foreach($msgs as $msg){
-                $html .= "<div class='alert alert-warning alert-dismissible alert-{$type}'>
+                $html .= "<div class='alert alert-success alert-dismissible alert-{$type}'>
                 {$msg}<button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'>
-                <span aria-hidden='true'>&times</span></button>
+                <span aria-hidden='true'></span></button>
                 </div>";
             }
         }

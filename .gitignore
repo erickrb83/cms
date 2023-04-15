@@ -6,3 +6,6 @@ notes/
 **/*-todo.md
 
 # git config --global core.excludesfile ""
+
+.env
+.evn.*

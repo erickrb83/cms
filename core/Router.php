@@ -12,12 +12,6 @@ class Router {
         $urlParts = explode('/', $url);
 
         // Set Controller
-        /**Below would be longer
-         * = if(!empty($urlParts)){
-         * return $urlParts[0];
-         * }else{
-         * return Config::get('default_controller)};
-         */
         $controller = !empty($urlParts[0])? $urlParts[0]: Config::get('default_controller');
         $controllerName = $controller;
         $controller = '\App\Controllers\\' .ucwords($controller). 'Controller';
@@ -35,7 +29,7 @@ class Router {
         }
         $controllerClass = new $controller($controllerName, $actionName);
         
-
+        // H::dnd($action);
         if(!method_exists($controllerClass, $action)){
             throw new \Exception("The method \"{$action}\" does not exist on the \"{$controller}\" controller");
         }
