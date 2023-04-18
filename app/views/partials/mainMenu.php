@@ -1,11 +1,11 @@
 <?php
-use Core\H;
-use App\Models\{Categories, Users};
-global $currentUser;
-$categories = Categories::findAllWithArticles();
-$authors = Users::findAuthorsWithArticles();
-
+  use Core\H;
+  use App\Models\{Categories, Users};
+  global $currentUser;
+  $categories = Categories::findAllWithArticles();
+  $authors = Users::findAuthorsWithArticles();
 ?>
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary nav navbar bg-dark" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="<?=ROOT?>">My Blog Project</a>

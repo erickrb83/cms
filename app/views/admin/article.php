@@ -1,16 +1,9 @@
 <?php 
 use Core\FH;
 $this->start('head'); ?>
-<script src="https://cdn.ckeditor.com/ckeditor5/37.0.1/classic/ckeditor.js"></script>
+< src="https://cdn.ckeditor.com/ckeditor5/37.0.1/classic/ckeditor.js"></>
 <?php $this->end(); ?>
-<style>
-    .ck-editor__editable_inline{
-        min-height: 400px;
-    }
-    .is-invalid + .ck-editor .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused){
-        border-color:crimson;
-    }
-</style>
+
 <?php $this->start('content'); ?>
 <h2><?= $this->heading;?></h2>
 <div class="poster">
@@ -22,7 +15,7 @@ $this->start('head'); ?>
             <?= FH::selectBlock('Category', 'category_id', $this->article->category_id, $this->categoryOptions ,['class' => 'form-control'], ['class' => 'form-group col-md-2'], $this->errors); ?>
             <?= FH::textarea('Article Body', 'body', html_entity_decode($this->article->body), ['class' => 'form-control', 'rows' => '15'], ['class' => 'form-group col-md-12'], $this->errors); ?>
             <?= FH::fileUpload('Featured Image', 'featured_image', ['class' => 'form-control-file'], ['class' => 'form-group col-12'], $this->errors );?>
-            <script>
+            <!-- <>
                 window.addEventListener('load', function () {
                     ClassicEditor
                         .create(document.querySelector('#body'))
@@ -30,7 +23,7 @@ $this->start('head'); ?>
                             console.error(error);
                         });
                 });     
-            </script>
+            </> -->
         </div>
         <?php if($this->hasImage) : ?>
             <div class="d-flex align-items-center">

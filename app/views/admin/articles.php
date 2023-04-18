@@ -32,12 +32,4 @@
     <?php $this->partial('partials/pager');?>
 </div>
 
-<script>
-    function deleteArticle(id){
-        if(window.confirm("Are you sure you want to delete this article")){
-            window.location.href = `<?=ROOT?>admin/deleteArticle/${id}`
-        }
-    }
-</script>
-
 <?php $this->end(); ?>

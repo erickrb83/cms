@@ -20,11 +20,11 @@ class Router {
         array_shift($urlParts);
         $action = !empty($urlParts[0])? $urlParts[0] : 'index';
         $actionName = $action;
-        // $var .= 'word' is the same $var = $var . 'word';
         $action .= "Action";
         array_shift($urlParts);
         
         if(!class_exists($controller)){
+            self::redirect('core/404.php');
             throw new \Exception("Controller class \"{$controller}\" not found");
         }
         $controllerClass = new $controller($controllerName, $actionName);

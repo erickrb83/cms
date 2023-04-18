@@ -20,11 +20,3 @@
 
     </div>
 </form> 
-
-<script>
-    function pager(page) {
-        document.getElementById('p').value = page;
-        var form = document.getElementById('pager');
-        form.submit();
-    }
-</script>

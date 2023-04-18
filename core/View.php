@@ -4,7 +4,7 @@ namespace Core;
 use Core\Config;
 
 class View {
-    private $_siteTitle = '', $_content = [], $_currentContent, $_buffer, $_layout, $_defaultViewPath;
+    private $_siteTitle = '', $_content = [], $_buffer, $_layout, $_defaultViewPath;
 
     public function __construct($path = ''){
         $this->_defaultViewPath = $path;

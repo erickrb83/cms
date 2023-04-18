@@ -71,3 +71,10 @@ html, body {
     padding-right: 1rem;
     overflow:hidden;
 }
+
+.ck-editor__editable_inline{
+    min-height: 400px;
+}
+.is-invalid + .ck-editor .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused){
+    border-color:crimson;
+}

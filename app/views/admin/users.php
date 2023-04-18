@@ -36,12 +36,6 @@
     </table>
     <?php $this->partial('partials/pager') ;?>
 </div>
-<script>
-    function confirmDelete(userId){
-        if(window.confirm("Are you sure you want to delete the user?")){
-            window.location.href = `<?=ROOT?>admin/deleteUser/${userId}`;
-        }
-    }
-</script>
+
 <?php $this->end(); ?>
 

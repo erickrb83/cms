@@ -5,7 +5,7 @@
 
 </div>
 <div class="poster">
-    <table class="table table-hover table-striped">
+    <table class="table table-hover table-stripped">
         <thead>
             <tr>
                 <th>ID</th>
@@ -28,13 +28,5 @@
     </table>
     <?php $this->partial('partials/pager')?>
 </div>
-
-<script>
-    function deleteCategory(categoryId){
-        if(window.confirm('Are you sure you want to delete this category?')){
-            window.location.href = `<?=ROOT?>admin/deleteCategory/${categoryId}`;
-        }
-    }
-</script>
 
 <?php $this->end();?>
