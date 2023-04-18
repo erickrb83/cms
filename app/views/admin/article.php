@@ -1,7 +1,6 @@
 <?php 
 use Core\FH;
 $this->start('head'); ?>
-< src="https://cdn.ckeditor.com/ckeditor5/37.0.1/classic/ckeditor.js"></>
 <?php $this->end(); ?>
 
 <?php $this->start('content'); ?>
@@ -15,15 +14,6 @@ $this->start('head'); ?>
             <?= FH::selectBlock('Category', 'category_id', $this->article->category_id, $this->categoryOptions ,['class' => 'form-control'], ['class' => 'form-group col-md-2'], $this->errors); ?>
             <?= FH::textarea('Article Body', 'body', html_entity_decode($this->article->body), ['class' => 'form-control', 'rows' => '15'], ['class' => 'form-group col-md-12'], $this->errors); ?>
             <?= FH::fileUpload('Featured Image', 'featured_image', ['class' => 'form-control-file'], ['class' => 'form-group col-12'], $this->errors );?>
-            <!-- <>
-                window.addEventListener('load', function () {
-                    ClassicEditor
-                        .create(document.querySelector('#body'))
-                        .catch(error => {
-                            console.error(error);
-                        });
-                });     
-            </> -->
         </div>
         <?php if($this->hasImage) : ?>
             <div class="d-flex align-items-center">

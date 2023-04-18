@@ -104,4 +104,8 @@ class BlogController extends Controller{
     public function articleNotFoundAction(){
         $this->view->render();
     }
+
+    public function fourOhFourAction(){        
+        $this->view->render();       
+}
 }

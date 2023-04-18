@@ -12,7 +12,7 @@ class Router {
         $urlParts = explode('/', $url);
 
         // Set Controller
-        $controller = !empty($urlParts[0])? $urlParts[0]: Config::get('default_controller');
+        $controller = !empty($urlParts[0]) ? $urlParts[0] : Config::get('default_controller');
         $controllerName = $controller;
         $controller = '\App\Controllers\\' .ucwords($controller). 'Controller';
 
@@ -24,15 +24,22 @@ class Router {
         array_shift($urlParts);
         
         if(!class_exists($controller)){
-            self::redirect('core/404.php');
-            throw new \Exception("Controller class \"{$controller}\" not found");
+            $controller = Config::get('default_controller');
+            $controllerName = $controller;
+            $controller = '\App\Controllers\\' .ucwords($controller). 'Controller';
+            array_shift($urlParts);
+            $action = "fourOhFour";
+            $actionName = $action;
+            $action .= "Action";
+            array_shift($urlParts); 
+            // throw new \Exception("Controller class \"{$controller}\" not found");
         }
         $controllerClass = new $controller($controllerName, $actionName);
         
-        // H::dnd($action);
         if(!method_exists($controllerClass, $action)){
             throw new \Exception("The method \"{$action}\" does not exist on the \"{$controller}\" controller");
         }
+        // php library function
         call_user_func_array([$controllerClass, $action], $urlParts);
     }
 

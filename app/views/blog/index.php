@@ -2,7 +2,7 @@
 <h2><?= $this->heading?></h2>
 
 <div class="articles-wrapper">
-    <?php foreach ($this->  articles as $article) : ?>
+    <?php foreach ($this->articles as $article) : ?>
         <div class="card article-preview">
             <img src="<?=ROOT . $article->img?>" class="card.img.top" />
             <div class="card-body">
